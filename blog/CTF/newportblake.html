@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="newportblake.css" media="screen">
+</head>
+<body>
+    <div class="container" >
+      <div class="main">  
+        <div class="header">
+              <h4 class="header-text1">@HackerGa2101</h4>
+              <img src="../../images/torii-gate.png" alt="gate" class="gate">
+              <h4 class="header-text2">CTF Write Up</h4>
+        </div>
+        <div class="content">
+             <div class="anh">
+                <img src="../../images/ctftime.jpg" alt="bksec" class="bksec">
+             </div>
+          <div class="baotext"> 
+             <div class="text", style="color: rgb(35, 34, 34);">
+                <h1 style="margin-left: 325px;">NEWPORTBLAKE CTF | CTFTIME</h1>
+                <br>
+                <p>*Đây là một cuộc thi CTF của Nam Mỹ mình tham gia hình thức online theo team trên CTFtime</p>
+                <br>
+                <p>Tham gia vì để học hỏi và trải nghiệm thêm về các đề thi CTF nên mình đi đơn</p>
+                <br>
+                <p>Nhìn chung thì đề khá dễ về mảng web, có vẻ là dành cho tân thủ (như mình :>). Nên clear web cũng không mất nhiều thời gian</p>
+             </div>
+             <div class="wu", style="color: rgb(35, 34, 34);">
+                <h4>Bài 1: web/Inspector Gadget</h4>
+                  <div class="chutrong">
+                       <p>*Mục tiêu của bài là tìm các mảnh ghép của flag được giấu đi</p>
+                       <div style="height: 3px;"></div>
+                       <p>Khá giống như bao bài 1 của các đề khác</p>
+                       <div style="height: 3px;"></div>
+                       <p>Đầu tiên là dạo và dùng thử web</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/newportblake/1.1.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Chỉ toàn là html và chữ, có những trang html khác được liên kết trong phần script</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/newportblake/1.2.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Mình Intruder tất cả đường dẫn đó. Và nhận được mảnh ghép đầu tiên ở gadgetmag.html</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/newportblake/1.3.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Mảnh thứ 2 ở supersecrettopsecret.txt</p>
+                        <div style="height: 3px;"></div>
+                        <img src="../../images/newportblake/1.4.png" alt="1" style="width: 1100px;">
+                        <div style="height: 3px;"></div>
+                        <p>Mình check thử robots.txt và có đường dẫn /mysecretfiles nhưng đã disable với tất cả user-agent mình đã thử nhưng không truy cập được</p>
+                        <div style="height: 3px;"></div>
+                        <img src="../../images/newportblake/1.5.png" alt="1" style="width: 1100px;">
+                        <p>Dạo chút nữa mình thấy được mảnh thứ 3 ở index.html (vì rất nhiều chữ nên search theo key /4 là được)</p>
+                        <img src="../../images/newportblake/1.6.png" alt="1" style="width: 1100px;">
+                        <p>Với đường dẫn ở trong robots.txt mình bypass thử và thành công tìm được /mysecretfiles.html</p>
+                        <br>
+                        <img src="../../images/newportblake/1.7.png" alt="1" style="width: 1100px;">
+                        <p>Truy cập vào và lấy được mảnh ghép cuối cùng</p>
+                        <br>
+                        <img src="../../images/newportblake/1.8.png" alt="1" style="width: 1100px;">
+                        <!--  -->
+                        <!--  -->
+                            <h4>Bài 2: web/walter's crystal shop</h4>
+                              <div class="chutrong">
+                                   <p>*Mục tiêu của bài là path traversal để đọc flag (hơi khác là lưu trong /tmp/flag.txt)</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Vì bài không có nhiều tính năng nên dùng thử bằng burp sẽ có được tất cả request của server xử lý</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/newportblake/2.1.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Đầu tiên thử upload 1 file bất kì lên và xem request bằng burp</p>
+                                   <div style="height: 3px;"></div>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/newportblake/2.2.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>/galleria?file=<ten_file> là đường dẫn để xem được file đã tải lên</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/newportblake/2.3.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Zui zui xíu mà web code python toàn đăng shell PHP với reverse private ip :>></p>
+                                    <br>
+                                    <p>Giờ đổi thử tên file thành /etc/passwd</p>
+                                    <div style="height: 3px;"></div>
+                                    <img src="../../images/newportblake/2.4.png" alt="1" style="width: 1100px;">
+                                    <div style="height: 3px;"></div>
+                                    <p>Thành công lấy được file /etc/passwd của server</p>
+                                    <div style="height: 3px;"></div>
+                                    <img src="../../images/newportblake/2.5.png" alt="1" style="width: 1100px;">
+                                    <p>Đổi path và lấy được flag của bài</p>
+                                </div>
+                        <!--  -->
+                        <!--  -->
+                        <h4>Bài 3: web/secret tunnel</h4>
+                        <div class="chutrong">
+                             <p>*Mục tiêu của bài là SSRF để truy cập vào localhost port 1337 /flag</p>
+                             <div style="height: 3px;"></div>
+                             <p>Lúc đầu ban tổ chức còn build lỗi file dockerfile vì không public port 5000 ra nên mình phải build lại local</p>
+                             <img src="../../images/newportblake/3.3.png" alt="1" style="width: 1100px;">
+                             <div style="height: 3px;"></div>
+                             <img src="../../images/newportblake/3.4.png" alt="1" style="width: 1100px;">
+                             <p>Mọi người có thể sửa file dockerfile như mình rồi chơi local là được</p>
+                             <div style="height: 3px;"></div>
+                             <p>Bài làm whitebox và source khá nhỏ nên view qua là biết hướng khai thác</p>
+                             <img src="../../images/newportblake/3.1.png" alt="1" style="width: 1100px;">
+                             <div style="height: 3px;"></div>
+                             <div style="height: 3px;"></div>
+                             <img src="../../images/newportblake/3.2.png" alt="1" style="width: 1100px;">
+                             <div style="height: 3px;"></div>
+                             <p>Bạn sẽ nhập một url input vào và server sẽ dùng requests.get để truy cập</p>
+                             <p>Nhưng bị blacklist mất một số từ như '127', 'x', 'ít hơn 3 dấu.', 'flag'</p>
+                             <div style="height: 3px;"></div>
+                             <p>'localhost' sẽ bypass được '127' và việc cấm 'x' chắc không muốn nhận url ngoài nhiều à :v</p>
+                             <p>Đầu tiên mình nghĩ FLAG, Flag sẽ bypass được 'flag' nhưng không vì không có hàm lower() trong flag.py</p>
+                             <p>Thì thôi ta để thành tất url encode là xong :></p>
+                             <img src="../../images/newportblake/3.6.png" alt="1" style="width: 1100px;">
+                             <div style="height: 3px;"></div>
+                             <p>Lụm cờ thôi!</p>
+                          </div>
+                        <!--  -->
+                        <!--  -->
+                        <h4>Bài 4: web/Galleria</h4>
+                        <div class="chutrong">
+                             <p>*Mục tiêu của bài là SQLi đọc flag trong cột flag bảng flag :></p>
+                             <div style="height: 3px;"></div>
+                             <p>Nói chung là baby SQLi thôi mà không biết sao lại là whitebox</p>
+                             <img src="../../images/newportblake/4.2.png" alt="1" style="width: 1100px;">
+                             <div style="height: 3px;"></div>
+                             <p>Mình nhìn qua code thấy có đoạn SQLi này và quá lười để làm tay :> sqlmap thôi</p>
+                             <div style="height: 3px;"></div>
+                             <img src="../../images/newportblake/4.1.png" alt="1" style="width: 1100px;">
+                             <p>Lụm cờ, lụm cờ</p>
+                          </div>
+                          <p>Nhìn chung là đề web rất dễ còn mảng khác thì mình kém nên không nhận xét được gì nhiều</p>
+          </div>   
+        </div>
+        <div class="end"></div>
+      </div>
+    </div>
+</body>
+</html>

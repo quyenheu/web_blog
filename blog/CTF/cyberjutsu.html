@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cyberjutsu.css" media="screen">
+</head>
+<body>
+    <div class="container" >
+      <div class="main">  
+        <div class="header">
+              <h4 class="header-text1">@HackerGa2101</h4>
+              <img src="../../images/torii-gate.png" alt="gate" class="gate">
+              <h4 class="header-text2">CTF Write Up</h4>
+        </div>
+        <div class="content">
+             <div class="anh">
+                <img src="../../images/cyberjutsu2.jpg" alt="bksec" class="bksec">
+             </div>
+          <div class="baotext"> 
+             <div class="text", style="color: rgb(35, 34, 34);">
+                <h1 style="margin-left: 380px;">CYBERJUTSU FINAL EXAM</h1>
+                <br>
+                <br>
+                <h4>*Note: Vì bài báo cáo khá dài nên chi tiết từng lỗ hổng sẽ được đề cập <a href="https://github.com/quyenheu/report-final-exam-CyberJutsu/blob/main/HOANG_TUYEN_QUYEN_REPORT.pdf">HERE</a>. Bên dưới là thuật lại thông tin chung về cuộc thi</h4>
+                <br>
+                <p>Đây là cuộc thi tổ chức nhằm kiểm tra đầu ra học viên khóa học web penetration testing của CyberJutsu</p>
+                <br>
+                <p>Hình thức: Thi online và làm bài độc lập. Học viên sẽ có 24h để tìm kiếm 5 lỗ hổng bảo mật trên các domain và subdomain trung tâm cung cấp. Sau đó sẽ có 24h làm report</p>
+                <br>
+                <p>Mình làm đề này mất hơn 3 tiếng (Flex nhẹ nhẹ vì thủa đó khá non tay) và 2 lon rockstar :v</p>
+                <br>
+                <p style="margin-left: 213px;">-----------------------------------------------------------------------------------------------------------------------------------------</p>
+                <br>
+             </div>
+             <!--  -->
+             <!--  -->
+             <div class="wu", style="color: rgb(35, 34, 34);">
+                  <div class="chutrong">
+                       <p>Ngày 23 tháng 07 năm 2023</p>
+                       <div style="height: 3px;"></div>
+                       <h3>Mô Tả:</h3>
+                       <p>Báo cáo này mô tả chi tiết quá trình và kết quả kiểm thử ứng dụng website koinbase và các subdomain liên quan
+                        Được thực hiện bởi Hoàng Tuyển Quyền</p>
+                        <p>Ngày 23 tháng 07, 2023</p>
+                       <div style="height: 3px;"></div>
+                       <h3>Đối tượng:</h3>
+                       <p>https://koinbase-82fe4ed16c9d0bc.cyberjutsu-lab.tech/</p>
+                        <p>https://upload.koinbase-82fe4ed16c9d0bc.cyberjutsu-lab.tech/</p>
+                       <div style="height: 3px;"></div>
+                       <h3>Thành Viên Tham Gia:</h3>
+                       <p>Hoàng Tuyển Quyền-WPT04</p>
+                        <p>Discord : quyenheu@9216</p>
+                        <div style="height: 3px;"></div>
+                        <h3>Công Cụ:</h3>
+                        <p>Kali linux , Burpsuite , DevTools , VScode</p>
+                        <div style="height: 3px;"></div>
+                        <br>
+                        <h2>MỤC LỤC:</h2>
+                        <h3>Note: Các lỗ hổng được sắp xếp theo thời gian tìm ra</h3>
+                        <h4 style="margin-left: 30px;">1.Tổng quan</h4>
+                        <h4 style="margin-left: 30px;">2.Phạm vi</h4>
+                        <h4 style="margin-left: 30px;">3.Lỗ hổng</h4>
+                        <p style="margin-left: 50px;">FLAG 4 : Trở thành triệu phú - Broken access control</p>
+                        <p style="margin-left: 50px;">FLAG 5 : Đọc dữ liệu Database - SQL injection</p>
+                        <p style="margin-left: 50px;">FLAG 3 : Đọc credit card crush - XSS</p>
+                        <p style="margin-left: 50px;">FLAG 1 : Bí mật giấu trong mã nguồn - Expose backup file</p>
+                        <p style="margin-left: 50px;">FLAG 2 : Đọc /secret.txt trên server upload - Get untrusted file to RCE</p>
+                        <h4 style="margin-left: 30px;">4.Kết luận</h4>
+                                   <!--  -->
+                                   <!--  -->
+                        <br>
+                        <h4>Chi tiết xem tại <a href="https://github.com/quyenheu/report-final-exam-CyberJutsu/blob/main/HOANG_TUYEN_QUYEN_REPORT.pdf">HERE</a></h4>           
+          </div>   
+        </div>
+        <div class="end"></div>
+      </div>
+    </div>
+</body>
+</html>

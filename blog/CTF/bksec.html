@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bksec.css" media="screen">
+</head>
+<body>
+    <div class="container" >
+      <div class="main">  
+        <div class="header">
+              <h4 class="header-text1">@HackerGa2101</h4>
+              <img src="../../images/torii-gate.png" alt="gate" class="gate">
+              <h4 class="header-text2">CTF Write Up</h4>
+        </div>
+        <div class="content">
+             <div class="anh">
+                <img src="../../images/bksec.png" alt="bksec" class="bksec">
+             </div>
+          <div class="baotext"> 
+             <div class="text", style="color: rgb(35, 34, 34);">
+                <h1 style="margin-left: 350px;">BÁCH KHOA CTF | BKCTF</h1>
+                <br>
+                <p>*Trong một lần cà khịa ông anh 96 lập ra bksec thì mình đã quyết định tham gia giải CTF này theo hình Online trên nền tảng Cookie Arena </p>
+                <br>
+                <p>Mặc dù thi theo team mà mình quyết định theo cảm xúc nên chẳng gọi được ai cả đành phải chơi 1 mình. Write up này mình tập trung giải quyết 2 bài web mình làm được. Hơi chê ban tổ chức xíu :v vì lúc đầu lỗi tùm lum phải down source về build local làm. Mình cũng lười nên dựng làm được 1 bài xong để đội ngũ bên kia fix xong mới vào chơi tiếp</p>
+                <br>
+                <p>Nhìn chung thì đề bksec khá khó nhưng cũng dựng lại dựa trên CVE thực tế nên chủ yếu đánh vào việc phân tích source và research của CTFthủ</p>
+             </div>
+             <div class="wu", style="color: rgb(35, 34, 34);">
+                <h4>Bài 1: Image Copy Resampled</h4>
+                  <div class="chutrong">
+                       <p>*Mục tiêu của bài là RCE để đọc file /flag.txt</p>
+                       <div style="height: 3px;"></div>
+                       <p>Tổng quan là đây 1 bài khá khoai thuật lại lỗ hổng của hàm  imagecopyresampled trong thư viện PD php. Ảnh sẽ là thành nhiều ô nhỏ ghép lại với nhau, và nếu bạn nhét payload làm sao để khi resample vẫn nguyên vẹn payload là ăn :v</p>
+                       <div style="height: 3px;"></div>
+                       <p>Đầu tiên là dạo và dùng thử web đã</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/bksec/1.7.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Tính năng chính là cho phép bạn upload ảnh lên và sẽ resize nó lại 40px sau đó render lại cho bạn ở đường dẫn trên </p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/bksec/1.3.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Vì là Whitebox nên công việc chính lè đọc source, research và đặt giả thuyết. Nhìn vào source thì web access cả file php (nhìn là thấy kèo ngon). Nhưng vấn đề là khi bạn up 1 file php với nội dung thuần php hoặc tự inject không theo chuẩn thì hàm imagecreatefromstring nó không hiểu và luôn trả về 1 chuẩn png</p>
+                       <div style="height: 3px;"></div>
+                       <img src="../../images/bksec/1.1.png" alt="1" style="width: 1100px;">
+                       <div style="height: 3px;"></div>
+                       <p>Code cũng không có gì lỏ nên mình quyết định đi research các hàm kia (vì chả dùng bao giờ)
+                        Mất hơn 1h đọc tài liệu trên php.net và search mình cũng thấy được long mạch
+                        Thì nói tổng quát lỗi là từ thằng thư viện xử lý ảnh PD trong php</p>
+                        <div style="height: 3px;"></div>
+                        <p>Có thông tin về hàm và thư viện lỗi việc search trở nên dễ dàng. Link mình follow để làm bài này: <a href="https://www.synacktiv.com/en/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html">Here</a></p>
+                        <img src="../../images//bksec/1.2.png" alt="1" style="width: 1100px;">
+                        <div style="height: 3px;"></div>
+                        <p>Đoạn code trên sẽ tạo cho mình 1 file chứa shell thực thi với get data 0=hàm thực thi và post data 1=lệnh thực thi
+                            .Payload chính của nó là (họ có giải thích là vì chữ in hoa tốt hơn và payload ngắn sẽ okay hơn ...)
+                            .Giờ upload lên web và wget vào để post data: wget url?0=shell_exec --post-data '1=ls</p>
+                        <div style="height: 3px;"></div>
+                        <img src="../../images//bksec/1.4.png" alt="1" style="width: 1100px;">
+                        <p>Thành công RCE và chỉ cần cat file flag là win rồi</p>
+                        <img src="../../images//bksec/1.6.png" alt="1" style="width: 1100px;">
+                        <p>Một bài CTF khá khó (với người không biết như mình) và câu rất nhiều thời gian research của các CTFer</p>
+                        <br>
+                        <!--  -->
+                        <!--  -->
+                            <h4>Bài 2: Metadata Checker</h4>
+                              <div class="chutrong">
+                                   <p>*Mục tiêu của bài là RCE để đọc file /flag.txt</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Bài này thì hay :v liên quan đến vụ unlink nghĩa là kiểu nó lưu file mình upload và sau khi lấy thông tin từ file xong thì xóa luôn</p>
+                                   <div style="height: 3px;"></div>
+                                   <p>Lỗi của bài này thì không khó quá. vì whitebox vào viewsource là thấy hết luôn rồi</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/bksec/2.2.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Upload file và họ check mỗi $_FILES[”image”][”type”] nên dễ dàng pybass để upload php
+                                    .Phân tích đường dẫn lưu file:</p>
+                                    <code>$target_file = $uploadpath . $userValue . "-" . $timestamp . "-" . $_FILE["image"]["name"]
+                                        <br>
+                                        <code>- việc họ lưu ở /var/tmp thì mình hoàn toàn không truy cập được</code>
+                                        <br>
+                                        <code>- nhưng để ý $userValue hoàn toàn thao túng được vì nó nhận tham số từ Cookie</code>
+                                        <br>
+                                        <code>- lại có 1 vấn đề nữa là documnet root là gì</code>
+                                        <br>
+                                        <code>- phải fuzz thôi</code> 
+                                        <br>
+                                        <code>- và cuối cùng mình chứng mình được /var/www/html là document root trả về kết quả lưu thành công</code>
+                                    </code>
+                                    <p>Liên kết lỗi để lưu ra document root</p>
+                                   <div style="height: 3px;"></div>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/bksec/2.1.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Nhiệm vụ giờ là truy cập vào tên file
+                                    . Nhưng đểu cái là toàn not found mặc dù lưu thành công lý do là vì mẩu code này</p>
+                                   <div style="height: 3px;"></div>
+                                   <img src="../../images/bksec/2.2.png" alt="1" style="width: 1100px;">
+                                   <div style="height: 3px;"></div>
+                                   <p>Nó sẽ unlink sau 1.5s upload haha rất dài dòng và loằng ngoằng
+                                    . Nhưng cũng không khó để tìm cách giải quyết
+                                    . Hoàn toàn có thể viết threading với python hoặc dùng turbo intruder</p>
+                                    <br>
+                                    <p>Nhưng 1.5s là quá nhiều mình nghĩ vậy và đi chứng mình giả thuyết này bằng trick lỏ “nhanh tay nhanh mắt”</p>
+                                    <div style="height: 3px;"></div>
+                                    <img src="../../images/bksec/2.5.png" alt="1" style="width: 1100px;">
+                                    <div style="height: 3px;"></div>
+                                    <p>Nhưng lại gặp lỗi vì ký tự loằng ngoằng của file ảnh đã vô tình làm hỏng nội dung file php có thể thằng pycharm nó không dịch được
+                                        . Nên ae lưu ý xóa bớt nội dung ảnh đi nhé
+                                        . Làm lại trick lỏ với file shell khác</p>
+                                    <div style="height: 3px;"></div>
+                                    <img src="../../images//bksec/2.6.png" alt="1" style="width: 1100px;">
+                                    <p>Thành công RCE và chỉ cần cat file flag là win rồi</p>
+                                    <img src="../../images//bksec/2.7.png" alt="1" style="width: 1100px;">
+                                    <p>Có lẽ là vì được whitebox nên ban tổ chức làm đề khá oặt ẹo :v câu giờ khỏi nói
+                                        . Nhưng đây là 1 bài khá hay</p>
+             </div>
+          </div>   
+        </div>
+        <div class="end"></div>
+      </div>
+    </div>
+</body>
+</html>

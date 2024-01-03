@@ -1,0 +1,56 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    color: rgb(255, 255, 255);
+   
+}
+.container {
+    width: 100%;
+    height: 15600px;
+    background-color:rgb(23, 23, 23) ;
+}
+
+.main {
+    width: 80%;
+    height: 15500px;
+    background-color: rgb(232, 232, 217);
+    margin-left: 10%;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color:rgb(23, 23, 23) ;
+}
+
+.gate {
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+    margin-top: 60px;
+}
+
+.header-text1 {
+    margin-top: 60px;
+}
+
+.header-text2 {
+    margin-top: 60px;
+    margin-left: 965px;
+}
+
+.bksec {
+    width: 1215px;
+    height: 650px;
+}
+
+.baotext {
+    margin-left: 30px; /* Khoảng cách 30px bên trái */
+    margin-right: 30px;
+}
+
+.wu {
+    margin-left: 30px; /* Khoảng cách 30px bên trái */
+    margin-right: 30px;
+}
